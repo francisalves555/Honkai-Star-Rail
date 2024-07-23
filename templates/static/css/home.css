@@ -1,0 +1,129 @@
+body {
+  margin: 0px;
+  background-color: #ffffff;
+}
+
+.corpo {
+  margin: 5px;
+  width: calc(100% - 20px); /* Para evitar overflow horizontal */
+}
+
+.bloco1 {
+  display: flex;
+}
+
+.titulo {
+  width: 100%; /* Faz o título ocupar 100% da largura da tela */
+  background-color: #af4844; /* Adiciona um fundo para melhor visualização */
+  text-align: center; /* Centraliza o texto */
+  padding: 1px 0; /* Adiciona espaçamento vertical */
+  margin: 20px auto 0px auto;
+  color: #f2eab7;
+  text-align:center;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+.header2 {
+  width: 10%; /* Ajuste a largura conforme necessário */
+}
+
+.grafico img{
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border: 1px solid #af4844; /* Adiciona uma borda para visualização */
+  border-bottom-right-radius: 15px; /* Borda arredondada */
+  border-bottom-left-radius: 15px;
+}
+
+
+.caminhos-blocos {
+  display: flex; /* Faz o contêiner se ajustar ao tamanho do conteúdo */
+  justify-content: center; /* Centraliza os itens na tela */
+  flex-wrap: wrap; /* Permite que os itens quebrem para uma nova linha se necessário */
+  gap: 20px; /* Espaçamento igual entre os itens */
+  border: 1px solid #af4844; /* Adiciona uma borda para visualização */
+  border-bottom-right-radius: 15px; /* Borda arredondada */
+  border-bottom-left-radius: 15px;
+  padding: 10px; /* Espaçamento interno para conteúdo */
+
+}
+
+.caminho-img-tex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px; /* Espaçamento igual à direita e à esquerda */
+  color: #080808;
+  font-weight: bold;
+}
+
+.personagens-blocos {
+  display: flex;
+  justify-content: center; /* Centraliza os itens na tela */
+  flex-wrap: wrap; /* Permite que os itens quebrem para uma nova linha se necessário */
+  gap: 20px; /* Espaçamento igual entre os itens */
+  border: 1px solid #af4844; /* Adiciona uma borda para visualização */
+  border-bottom-left-radius: 15px; /* Borda arredondada */
+  border-bottom-right-radius: 15px;
+  padding: 20px 10px 10px 10px; /* Espaçamento interno para conteúdo */
+  margin-bottom: 10px;
+}
+
+.info_pers {
+  padding: 1px 0; /* Adiciona espaçamento vertical */
+  margin: 0px 10px 10px 0px;
+  border: 1px solid #ddd; /* Adiciona uma borda para visualização */
+  border-radius: 15px; /* Borda arredondada */
+  padding: 10px 10px 5px 10px; /* Espaçamento interno para conteúdo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra leve */
+  background-color: #af4844;
+}
+
+.foto_info {
+  display: flex;
+  align-items: center; /* Alinha verticalmente os itens ao centro */
+  justify-content: space-between; /* Espaço entre os itens */
+}
+
+.foto_textos {
+  flex-direction: column; /* Empilha os textos verticalmente */
+}
+
+.imagem {
+  margin-left: 10px; /* Espaçamento à esquerda da imagem */
+}
+
+.nome-p {
+  font-weight: bold; /* Deixa o texto em negrito */
+  font-size: 20px; /* Ajuste o tamanho da fonte conforme necessário */
+  color: #f2eab7;
+}
+
+.caminho-p {
+  font-style: italic;
+  font-size: 15px;
+  color: #ffffff;
+}
+
+.data-p {
+  font-size: 10px;
+  color: #ffffff;
+}
+
+.tiro-p {
+  background-color: #f2eab7;
+  border: 1px;
+  border-radius: 5px;
+  margin: 6px 3px 0px 3px;
+  text-align: center;
+  color: #000000;
+  font-weight: bolder;
+}
+
+input::placeholder {
+  color: #fcf3b8ab; /* Substitua 'red' pla cor desejada */
+  opacity: 1; /* Opcional: Ajusta a opacidade do texto do placeholder */
+}
+

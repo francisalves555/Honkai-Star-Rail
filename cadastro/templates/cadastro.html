@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'head' %} 
+<link href="{% static 'css/home.css' %}" rel="stylesheet">
+<link href="{% static 'css/cadastro.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+{% if messages %}
+    <br>
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<div class="corpo">
+    <div class="bloco-total">
+        <div class="bloco-cad-1"><div class="titulo">Cadastrar banner de personagem</div>
+            <form action="{% url "personagem" %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <div class="cadastro-p"> 
+                    <div class="cadastro-info">
+                        <label for="" class="text-d">Nome do personagem 5*:</label>
+                        <input type="text" class="input-d" id="" name="nome">
+                    </div>
+                    <div class="junta-bloco">
+                        <div class="cadastro-info">
+                            <label for="" class="text-calen">Data que começou o banner:</label>
+                            <input type="date" name="data_inicio" id="" class="input-d">
+                        </div>
+                        <div class="cadastro-info">
+                            <label for="" class="text-calen">Data que vai terminar o banner:</label>
+                            <input type="date" name="data_final" id="" class="input-d">
+                        </div>
+                    </div>
+                    <div class="junta-bloco">
+                        <div class="cadastro-info">
+                            <label for="" class="text-d">Escolha o caminho do personagem:</label>
+                            <select id="tipo" class="input-d" name="caminho">
+                                <option value="1">Destruição</option>
+                                <option value="2">Caça</option>
+                                <option value="3">Abundância</option>
+                                <option value="4">Preservação</option>
+                                <option value="5">Inexistência</option>
+                                <option value="6">Harmonia</option>
+                                <option value="7">Erudição</option>
+                            </select>
+                        </div>
+                        <div class="cadastro-info">
+                            <label for="" class="text-d">Qual o tipo do banner?</label>
+                            <select id="tipo" class="input-d" name="tipo">
+                                <option value="False">Comum</option>
+                                <option value="True">Limitado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cadastro-info">
+                        <label for="" class=".text-file">Foto do personagem:</label> <br>
+                        <input type="FILE" value="Alterar PDF" class="input-d" name="foto">
+                    </div>
+                    <div class="cadastro-info">
+                        <label for="" class=".text-file">Foto em miniatura do personagem:</label> <br>
+                        <input type="FILE" value="Alterar PDF" class="input-d" name="mini-foto">
+                    </div>
+             
+                    <button type="submit" class="btn"><span class="btn-text">Cadastrar</span></button>
+                </div>    
+            </form><div class="titulo-final"></div>
+        </div>
+            <div class="bloco-cad-2">
+                <img width="405px" src="{% static 'img/pompom.jpeg'%}">
+            </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

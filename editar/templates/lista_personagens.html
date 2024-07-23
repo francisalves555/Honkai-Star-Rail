@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'head' %} 
+<link href="{% static 'css/home.css' %}" rel="stylesheet">
+<link href="{% static 'css/cadastro.css' %}" rel="stylesheet">
+<link href="{% static 'css/lista_per_arm.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+{% if messages %}
+    <br>
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<div class="corpo">    
+    <div class="titulo">
+        <h2 class="caminhos-title">Lista de personagens</h2>
+    </div>
+    <div class="personagens-blocos">
+    {% for dados_personagens in dados_personagem %}
+        <div class="info_pers">
+            <div class="foto_info">
+                <div class="foto_textos"> 
+                    <span class="nome-p">{{ dados_personagens.banner.nome }}</span><br>
+                    <span class="caminho-p">{{ dados_personagens.data_inicio }}</span><br>
+                    <span class="caminho-p">{{ dados_personagens.data_final }}</span>
+                </div>
+                {% if dados_personagens.banner.foto_m %}
+                    <img class="imagem" width="80px" src="{{ dados_personagens.banner.foto_m.url }}" alt="Imagem do Personagem">
+                {% else %}
+                    <p>Imagem não disponível</p>
+                {% endif %}
+            </div>
+            <div class="tiro-p">
+                <a href="{% url 'ed_personagem' dados_personagens.id %}" style="text-decoration: none;"> ALTERAR</a>
+            </div>
+        </div>  
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

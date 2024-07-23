@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+{% load extra_tags %}
+{%block 'head' %} 
+<link href="{% static 'css/home.css' %}" rel="stylesheet" >
+{% endblock %}
+
+{% block 'conteudo' %}
+<div class="corpo">
+
+    <div class="titulo">
+        <h2 class="caminhos-title">Caminhos</h2>
+    </div>
+    
+   <div class="caminhos-blocos">
+        <div class="caminho-img-tex">
+            <img width="100px" src="{% static 'img/inexistencia.png' %}">{{ counts.count_5 }}
+        </div>
+
+        <div class="caminho-img-tex">
+            <img width="100px" src="{% static 'img/destruicao.png' %}">{{ counts.count_1 }}
+        </div>
+        
+        <div class="caminho-img-tex">
+            <img width="100px" src="{% static 'img/caca.png' %}">{{ counts.count_2 }}
+        </div>
+
+        <div class="caminho-img-tex">
+            <img width="100px" src="{% static 'img/erudicao.png' %}">{{ counts.count_7 }}
+        </div>
+
+        <div class="caminho-img-tex">
+            <img width="100px" src="{% static 'img/harmonia.png' %}">{{ counts.count_6 }}
+        </div>
+        
+        <div class="caminho-img-tex">
+            <img width="100px" src="{% static 'img/preservacao.png' %}">{{ counts.count_4 }}
+        </div>
+
+        <div class="caminho-img-tex">
+            <img width="100px" src="{% static 'img/abundancia.png' %}">{{ counts.count_3 }}
+        </div>
+        
+        <div class="caminho-img-tex">
+            <img width="100px" src="{% static 'img/total.png' %}"> {{ total_count }}
+        </div>
+        <div class="caminho-img-tex">
+            <img width="100px" src="{% static 'img/totaltiros.png' %}">{{ total_num_t }}
+        </div>
+        <div class="caminho-img-tex">
+            <img width="100px" src="{% static 'img/totaldegemas.png' %}">{{ total_gem|floatformat:2|intcomma }}
+        </div>
+    </div>
+
+    <div class="titulo">
+        <h2 class="caminhos-title">Personagens adquiridos</h2>
+    </div>
+
+    <div class="personagens-blocos">
+        {% for dados_tiro_ps in dados_tiro_p %}
+        <div class="info_pers">
+            <div class="foto_info">
+                <div class="foto_textos"> 
+                    <span class="nome-p">{{ dados_tiro_ps.ocorrencia.banner.nome }}</span><br>
+                    <span class="caminho-p">{{ dados_tiro_ps.ocorrencia.banner.caminho|caminho_display }}</span><br>
+                    <span class="data-p">{{ dados_tiro_ps.data_adc }}</span>
+                </div>
+                {% if dados_tiro_ps.ocorrencia.banner.foto_m %}
+                    <img class="imagem" width="80px" src="{{ dados_tiro_ps.ocorrencia.banner.foto_m.url }}" alt="Imagem do Personagem">
+                {% else %}
+                    <p>Imagem não disponível</p>
+                {% endif %}
+            </div>
+            <div class="tiro-p">
+                TIROS: {{dados_tiro_ps.num_t}}
+            </div>
+        </div>  
+        {% endfor %}
+    </div>
+    
+    <div class="titulo">
+        <h2 class="caminhos-title">Gráfico com total de tiros por mês</h2>
+    </div>
+    <div class="grafico">
+        <img src="{{ Barras }}" alt="Gráfico de Barras">
+    </div>
+
+    <div class="titulo">
+        <h2 class="caminhos-title">Armas adquiridos</h2>
+    </div>
+
+    <div class="personagens-blocos">
+        {% for dados_tiros_as in dados_tiros_a %}
+        <div class="info_pers">
+            <div class="foto_info">
+                <div class="foto_textos"> 
+                    <span class="nome-p">{{ dados_tiros_as.ocorrencia.banner.nome_a }}</span><br>
+                    <span class="data-p">{{ dados_tiros_as.data_tadc }}</span>
+                </div>
+                {% if dados_tiros_as.ocorrencia.banner.foto_a %}
+                    <img class="imagem" width="80px" src="{{ dados_tiros_as.ocorrencia.banner.foto_a.url }}" alt="Imagem do Personagem">
+                {% else %}
+                    <p>Imagem não disponível</p>
+                {% endif %}
+            </div>
+            <div class="tiro-p">
+                TIROS: {{dados_tiros_as.num_ta}}
+            </div>
+        </div>  
+        {% endfor %}
+    </div>
+
+    <div class="titulo">
+        <h2 class="caminhos-title">Gráfico com total de tiros por mês</h2>
+    </div>
+    <div class="grafico">
+        <img src="{{ Barras_AR }}" alt="Gráfico de Barras">
+    </div>
+
+
+<h4>Gráfico de caminhos</h4><img src="{{ Pizza }}" alt="Gráfico de Ba">
+
+</div>
+
+{% endblock %}

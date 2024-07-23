@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'head' %} 
+<link href="{% static 'css/home.css' %}" rel="stylesheet" >
+<link href="{% static 'css/cadastro.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+{% if messages %}
+    <br>
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<div class="corpo">
+    <div class="bloco-total">
+        <div class="bloco-cad-1"><div class="titulo">INFORMAÇÕES</div>
+            <form action="{% url "cad_tiro_arma" %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <div class="cadastro-p"> 
+                    <div class="cadastro-info">
+                        <label for="enableSelect">Se for reroll marcar a caixinha:</label>
+                        <input type="checkbox" id="enableSelect" onchange="toggleSelect()">
+                    </div>
+                    <div class="cadastro-info">{{ armas_ocorrencias.id }}
+                        <label for="personagemSelect-2" id="labelPersonagemSelect-2" class="text-d label-disabled">Escolha o banner de reroll:</label>
+                        <select id="personagemSelect-2" class="input-d" name="nome_r" onchange="toggleInput()" disabled>
+                            {% for armas_ocorrencias in armas_ocorrencia %}
+                                <option value="{{ armas_ocorrencias.id }}">{{ armas_ocorrencias.banner.nome_a }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="cadastro-info">{{ armas_comuns.id }}
+                        <label for="personagemSelect" id="labelPersonagemSelect" class="text-d">Escolha o banner do personagem:</label>
+                        <select id="personagemSelect" class="input-d" name="nome" onchange="toggleInput()">
+                            {% for armas_comuns in armas_comum %}
+                                <option value="{{ armas_comuns.id }}">{{ armas_comuns.banner.nome_a }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="cadastro-info">
+                        <label for="" class="text-d">Total de tiros</label>
+                        <input type="text" class="input-d" id="" name="tiros" placeholder="">
+                    </div>
+                    <div class="cadastro-info">
+                        <label for="" class="text-calen">Data que a arma foi adiquirida</label>
+                        <input style="width: 100%" type="date" name="data_adc" id="" class="input-d">
+                    </div>
+                    <div class="cadastro-info">
+                        <label for="" class="text-calen">Qual o tipo do banner</label>
+                        <select id="tipo" class="input-d" name="tipo">
+                            <option value="False">Comum</option>
+                            <option value="True">Limitado</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">Cadastrar</button>
+            </form>
+            </div>
+        </div>
+            <div class="bloco-cad-2">
+                <div class="titulo">FOTO</div>
+                    <img width="390px" id="personagemImage" src="{% static 'img/pompom-hsr.gif' %}">
+                </div>
+            </div>
+</div>
+
+<script>
+    function toggleInput() {
+        var select1 = document.getElementById("personagemSelect");
+        var select2 = document.getElementById("personagemSelect-2");
+        var image = document.getElementById("personagemImage");
+    
+        // Mapeie as opções do select para os caminhos das imagens
+        var imagePaths = {
+            {% for armas_comuns in armas_comum %}
+                "{{ armas_comuns.id }}": "{% if armas_comuns.banner.foto_a %}{{ armas_comuns.banner.foto_a.url }}{% else %}{% static 'img/pompom.jpeg' %}{% endif %}",
+            {% endfor %}
+            {% for arma_ocorrencias in armas_ocorrencia %}
+                "{{ arma_ocorrencias.id }}": "{% if arma_ocorrencias.banner.foto_a %}{{ arma_ocorrencias.banner.foto_a.url }}{% else %}{% static 'img/pompom.jpeg' %}{% endif %}",
+            {% endfor %}
+        };
+    
+        var imagePath = "{% static 'img/pompom.jpeg' %}"; // Caminho padrão
+    
+        // Verifica a seleção no primeiro select
+        if (select1 && !select1.disabled) {
+            var selectedOption1 = select1.options[select1.selectedIndex];
+            var selectedId1 = selectedOption1.value; // Usa value para ID
+            imagePath = imagePaths[selectedId1] || imagePath;
+        }
+    
+        // Verifica a seleção no segundo select
+        if (select2 && !select2.disabled) {
+            var selectedOption2 = select2.options[select2.selectedIndex];
+            var selectedId2 = selectedOption2.value; // Usa value para ID
+            imagePath = imagePaths[selectedId2] || imagePath;
+        }
+    
+        // Atualiza o atributo src da imagem com o caminho obtido
+        image.src = imagePath;
+    }
+    
+    function toggleSelect() {
+        const enableSelect = document.getElementById('enableSelect').checked;
+        const selectPersonagem2 = document.getElementById('personagemSelect-2');
+        const selectPersonagem = document.getElementById('personagemSelect');
+        const labelPersonagemSelect2 = document.getElementById('labelPersonagemSelect-2');
+        const labelPersonagemSelect = document.getElementById('labelPersonagemSelect');
+    
+        if (enableSelect) {
+            selectPersonagem2.disabled = false;
+            selectPersonagem.disabled = true;
+            labelPersonagemSelect2.classList.remove('label-disabled');
+            labelPersonagemSelect.classList.add('label-disabled');
+        } else {
+            selectPersonagem2.disabled = true;
+            selectPersonagem.disabled = false;
+            labelPersonagemSelect2.classList.add('label-disabled');
+            labelPersonagemSelect.classList.remove('label-disabled');
+        }
+    
+        // Atualiza a imagem após alternar os selects
+        toggleInput();
+    }
+</script>
+
+
+{% endblock %}

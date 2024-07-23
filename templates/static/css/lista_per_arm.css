@@ -1,0 +1,15 @@
+.titulo {
+    width: 100%; /* Faz o título ocupar 100% da largura da tela */
+    background-color: #af4844; /* Adiciona um fundo para melhor visualização */
+    text-align: center; /* Centraliza o texto */
+    padding: 1px 0; /* Adiciona espaçamento vertical */
+    margin: 20px auto 0px auto;
+    color: #f2eab7;
+    text-align:center;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+  }
+
+.no-underline {
+  text-decoration: none;
+}

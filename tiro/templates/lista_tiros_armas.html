@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'head' %} 
+<link href="{% static 'css/home.css' %}" rel="stylesheet">
+<link href="{% static 'css/cadastro.css' %}" rel="stylesheet">
+<link href="{% static 'css/lista_per_arm.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+{% if messages %}
+    <br>
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<div class="corpo">    
+    <div class="titulo">
+        <h2 class="caminhos-title">Tiros no banner de armas</h2>
+    </div>
+    <div class="personagens-blocos">
+    {% for tds_arma in tds_armas %}
+        <div class="info_pers">
+            <div class="foto_info">
+                <div class="foto_textos"> 
+                    <span class="nome-p">{{ tds_arma.ocorrencia.banner.nome_a }}</span><br>
+                    <span class="caminho-p">{{ tds_arma.data_tadc }}</span><br>
+                    <span class="caminho-p">Tiros: {{ tds_arma.num_ta }}</span>
+                </div>
+                {% if tds_arma.ocorrencia.banner.foto_a %}
+                    <img class="imagem" width="80px" src="{{ tds_arma.ocorrencia.banner.foto_a.url }}" alt="Imagem do Personagem">
+                {% else %}
+                    <p>Imagem não disponível</p>
+                {% endif %}
+            </div>
+            <div class="tiro-p">
+                <a href="{% url 'ed_tiro_arma' tds_arma.id %}" style="text-decoration: none;"> ALTERAR</a>
+            </div>
+        </div>  
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

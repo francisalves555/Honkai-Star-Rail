@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'head' %} 
+<link href="{% static 'css/home.css' %}" rel="stylesheet">
+<link href="{% static 'css/cadastro.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+{% if messages %}
+    <br>
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<div class="corpo">
+    <div class="bloco-total">
+        <div class="bloco-cad-1"><div class="titulo">Editar tiro de arma</div>
+            <form action="{% url 'ed_tiro_arma' info_tiro.id  %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <div class="cadastro-p"> 
+                    <div class="cadastro-info">
+                        <label for="" class="text-d">Nome da arma 5*:</label>
+                        <input type="text" class="input-d" id="" name="nome" value="{{info_tiro.ocorrencia.banner.nome_a}}">
+                    </div>
+                    <div class="junta-bloco">
+                        <div class="cadastro-info">
+                            <label for="" class="text-calen">Data que pegou o personagem:</label>
+                            <input type="date" name="data_adc" id="" class="input-d" value="{{info_tiro.data_tadc|date:'Y-m-d'}}">
+                        </div>
+                    </div>
+                    <div class="cadastro-info">
+                        <label for="numero_ocorrencia" class="text-d">Número de Ocorrência:</label>
+                        <input type="number" class="input-d" id="numero_ocorrencia" name="numero_ocorrencia" value="{{ info_tiro.ocorrencia.id }}" readonly>
+                    </div>
+                    <div class="cadastro-info">
+                        <label for="" class="text-d">Quantos tiros foram para pegar:</label>
+                        <input type="text" class="input-d" id="" name="tiros" placeholder="" value="{{info_tiro.num_ta}}">
+                    </div>
+                    <div class="junta-bloco">
+                        <div class="cadastro-info">
+                            <label for="" class="text-d">Qual o tipo do banner?</label>
+                            <select id="tipo" class="input-d" name="tipo">
+                                <option value="False" {% if not info_tiro.tipo_ta %}selected{% endif %}>Comum</option>
+                                <option value="True"{% if info_tiro.tipo_ta %}selected{% endif %}>Limitado</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                    <button type="submit" class="btn-edt"><span class="btn-text">Editar</span></button>
+                    <form action="{% url 'del_tiro_arma' info_tiro.id %}" method="POST">{% csrf_token %}
+                        <button type="submit" class="btn-del">Deletar</button>
+                    </form>
+                </div>    
+            
+        </div>
+            <div class="bloco-cad-2">
+                {% if info_tiro.ocorrencia.banner.foto_a %}
+                    <img width="405px" src="{{info_tiro.ocorrencia.banner.foto_a.url}}">
+                {% else %}
+                    <img width="405px" src="{% static 'img/pompom.jpeg'%}">
+                {% endif %}
+            </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

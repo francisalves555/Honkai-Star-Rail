@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'head' %} 
+<link href="{% static 'css/home.css' %}" rel="stylesheet" >
+<link href="{% static 'css/cadastro.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+{% if messages %}
+    <br>
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<div class="corpo">
+    <div class="bloco-total">
+        <div class="bloco-cad-1"><div class="titulo">Cadastrar reroll de personagem</div>
+            <form action="{% url "reroll" %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <div class="cadastro-p"> 
+                    <div class="cadastro-info">
+                        <label for="" class="text-d">Escolha o banner de reroll:</label>
+                        <select id="personagemSelect" class="input-d" name="nome" onchange="toggleInput()">
+                            {% for personagem_comum in personagens_comum %}
+                                <option value="{{ personagem_comum.banner.id }}">{{ personagem_comum.banner.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="cadastro-info">
+                        <label for="" class="text-d">Reroll número?</label>
+                        <input type="text" class="input-d" id="" name="reroll" placeholder="EX: 1, 2, 3, 4....">
+                    </div>
+                    <div class="junta-bloco">
+                        <div class="cadastro-info">
+                            <label for="" class="text-calen">Data que começou o banner:</label>
+                            <input type="date" name="data_inicio" id="" class="input-d">
+                        </div>
+                        <div class="cadastro-info">
+                            <label for="" class="text-calen">Data que vai terminar o banner:</label>
+                            <input type="date" name="data_final" id="" class="input-d">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">Cadastrar</button>
+                </div>
+            </form>
+            </div>
+            <div class="bloco-cad-2">
+                <div class="titulo">FOTO</div>
+                <img width="390px" id="personagemImage" src="{% static 'img/pompom.jpeg' %}">
+            </div>
+        </div>
+
+    </div>
+<script>
+    function toggleInput() {
+        var select = document.getElementById("personagemSelect");
+        var image = document.getElementById("personagemImage");
+
+        // Mapeie as opções do select para os caminhos das imagens
+        var imagePaths = {
+            // Use valores das opções do select como chaves e caminhos das imagens como valores
+            {% for personagem_comum in personagens_comum %}
+                "{{ personagem_comum.banner.id }}": "{% if personagem_comum.banner.foto %}{{ personagem_comum.banner.foto.url }}{% else %}{% static 'img/pompom.jpeg' %}{% endif %}",
+            {% endfor %}
+        };
+
+        var selectedOption = select.options[select.selectedIndex];
+        var imageName = selectedOption.value;
+        var imagePath = imagePaths[imageName]; // Obtém o caminho da imagem com base na seleção
+
+        if (imagePath) {
+            // Atualiza o atributo src da imagem com o caminho obtido
+            image.src = imagePath;
+        } else {
+            // Se a imagem correspondente não for encontrada, defina uma imagem padrão
+            image.src = "{% static 'img/pompom.jpeg' %}";
+        }
+    }
+</script>
+
+
+{% endblock %}
