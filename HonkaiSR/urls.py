@@ -7,8 +7,8 @@ from .views import home_redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cadastro/', include('cadastro.urls')),
-    path('tiro/', include('tiro.urls')),
+    path('cadastros/', include('cadastro.urls')),
+    path('tiros/', include('tiro.urls')),
     path('editar/', include('editar.urls')),
     path('home/', include('home.urls')),
     path('', home_redirect),

@@ -1,6 +1,7 @@
 import os
 from django.shortcuts import render, redirect
 from cadastro.models import banner_personagem, banner_arma, OcorrenciaBannerArma, OcorrenciaBannerPersonagem
+from tiro.models import tiro_b_arma, tiro_b_personagem
 from django.contrib import messages
 from django.contrib.messages import constants
 from datetime import datetime
@@ -161,3 +162,77 @@ def del_OC_arma(request, id):
         arma.delete()
         messages.add_message(request, constants.ERROR, 'Reroll deletado com sucesso')
     return redirect('lista_armas')
+
+def ed_tiro_personagem(request,id):
+    info_tiro = tiro_b_personagem.objects.get(id=id)
+
+    if request.method == 'POST':
+
+        nome = request.POST.get('nome') 
+        data = request.POST.get('data_adc')
+        tiros = request.POST.get('tiros') 
+        tipo = request.POST.get('tipo') == 'True'
+
+        if data:
+            try:
+                info_tiro.data_adc = datetime.strptime(data, '%Y-%m-%d').date()
+            except ValueError:
+                info_tiro.data_adc = None
+
+        info_tiro.num_t = tiros
+        info_tiro.tipo_t = tipo
+
+        if nome:
+            banner = info_tiro.ocorrencia.banner
+            banner.nome = nome
+            banner.save()
+
+        info_tiro.save()
+
+        messages.add_message(request, constants.SUCCESS, 'Editado com sucesso')
+    return render(request, 'ed_tiro_personagem.html', { 'info_tiro':info_tiro, 'personagens_comum':[info_tiro.ocorrencia] })
+
+def ed_tiro_arma(request, id):
+    info_tiro = tiro_b_arma.objects.get(id=id)
+    
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        data_adc = request.POST.get('data_adc')
+        numero_ocorrencia = request.POST.get('numero_ocorrencia')
+        tiros = request.POST.get('tiros')
+        tipo = request.POST.get('tipo') == 'True'
+
+        if data_adc:
+            try:
+                info_tiro.data_tadc = datetime.strptime(data_adc, '%Y-%m-%d').date()
+            except ValueError:
+                info_tiro.data_tadc = None
+
+        info_tiro.num_ta = tiros
+        info_tiro.tipo_ta = tipo
+
+        if nome:
+            banner = info_tiro.ocorrencia.banner
+            banner.nome_a = nome
+            banner.save()
+
+        info_tiro.save()
+        messages.add_message(request, constants.SUCCESS, 'Editado com sucesso')
+    return render(request, 'ed_tiro_arma.html', {'info_tiro':info_tiro})
+
+def del_tiro_personagem(request,id):
+    del_tiro = tiro_b_personagem.objects.get(id=id)
+
+    del_tiro.delete()
+    messages.add_message(request, constants.ERROR, 'Deletado com sucesso')
+
+    return redirect('lista_tiros_personagens')
+
+def del_tiro_arma(request, id):
+    del_tiro = tiro_b_arma.objects.get(id=id)
+
+    del_tiro.delete()
+    messages.add_message(request, constants.ERROR, 'Deletado com sucesso')
+
+    return redirect('lista_tiros_personagens')
+
